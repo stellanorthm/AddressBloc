@@ -8,16 +8,20 @@ require_relative '../models/address_book'
    end
 
    def main_menu
-     puts "Main Menu - #{address_book.entries.count} entries"
+
+    puts "Main Menu - #{address_book.entries.count} entries"
           puts "1 - View all entries"
           puts "2 - Create an entry"
           puts "3 - Search for an entry"
           puts "4 - Import entries from a CSV"
-          puts "5 - Exit"
+          puts "5 - View Entry Number n"
+          puts "6 - Exit"
           print "Enter your selection: "
 
           selection = gets.to_i
-          case selection
+
+      case selection
+
        when 1
          system "clear"
          view_all_entries
@@ -35,15 +39,18 @@ require_relative '../models/address_book'
          read_csv
          main_menu
        when 5
+         system "clear"
+         display_entry
+         main_menu
+       when 6
          puts "Good-bye!"
-
          exit(0)
 
        else
        system "clear"
        puts "Sorry, that is not a valid input"
        main_menu
-   end
+     end
  end
 
  def view_all_entries
@@ -58,6 +65,19 @@ require_relative '../models/address_book'
     puts "End of entries"
  end
 
+   def display_entry
+     print "Entry number: "
+     selection = gets.chomp.to_i
+     if selection < @address_book.entries.count
+       puts @address_book.entries[selection]
+       gets.chomp
+       puts "Press Enter to Exit"
+       system "clear"
+     else
+       puts "#{selection} is not a valid input"
+    end
+   end
+
    def create_entry
      system "clear"
      puts "New AddressBloc Entry"
@@ -69,6 +89,7 @@ require_relative '../models/address_book'
      email = gets.chomp
 
      address_book.add_entry(name, phone, email)
+
      system "clear"
      puts "New entry created"
    end
@@ -93,9 +114,9 @@ require_relative '../models/address_book'
    when "d"
    when "e"
    when "m"
-          system "clear"
-          main_menu
-        else
+  system "clear"
+  main_menu
+  else
           system "clear"
           puts "#{selection} is not a valid input"
           entry_submenu(entry)
