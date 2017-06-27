@@ -106,13 +106,23 @@ end
 
 end
 
-  describe "remove_entry" do
+describe "remove_entry" do
     it "confirm that a single entry is removed from the address book" do
       book = AddressBook.new
       book.remove_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
       expect(book.entries.size).to eq 0
     end
-  end
+end
+
+describe "detonate" do
+    it "all entries are deleted from the address book" do
+      book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
+      book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
+      book.add_entry('Ada Lovelace', '010.012.1815', 'augusta.king@lovelace.com')
+      book.detonate
+      expect(book.entries.size).to eq 0
+    end
+end
 
   describe "#binary_search" do
      it "searches AddressBook for a non-existent entry" do
